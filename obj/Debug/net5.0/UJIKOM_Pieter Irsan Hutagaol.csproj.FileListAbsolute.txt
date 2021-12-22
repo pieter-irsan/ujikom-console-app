@@ -1,0 +1,23 @@
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.exe
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.deps.json
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.runtimeconfig.json
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.runtimeconfig.dev.json
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.dll
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\ref\UJIKOM_Pieter Irsan Hutagaol.dll
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.pdb
+C:\Users\Personal\Desktop\Praktek\obj\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.csproj.AssemblyReference.cache
+C:\Users\Personal\Desktop\Praktek\obj\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Personal\Desktop\Praktek\obj\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.AssemblyInfoInputs.cache
+C:\Users\Personal\Desktop\Praktek\obj\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.AssemblyInfo.cs
+C:\Users\Personal\Desktop\Praktek\obj\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.csproj.CoreCompileInputs.cache
+C:\Users\Personal\Desktop\Praktek\obj\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.dll
+C:\Users\Personal\Desktop\Praktek\obj\Debug\net5.0\ref\UJIKOM_Pieter Irsan Hutagaol.dll
+C:\Users\Personal\Desktop\Praktek\obj\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.pdb
+C:\Users\Personal\Desktop\Praktek\obj\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.genruntimeconfig.cache
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\System.Data.SqlClient.dll
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\runtimes\win-arm64\native\sni.dll
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\runtimes\win-x64\native\sni.dll
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\runtimes\win-x86\native\sni.dll
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Personal\Desktop\Praktek\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Personal\Desktop\Praktek\obj\Debug\net5.0\UJIKOM_Pieter Irsan Hutagaol.csproj.CopyComplete
