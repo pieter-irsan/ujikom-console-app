@@ -34,7 +34,6 @@ namespace Praktek
                     method.GetCosts();
                     break;
                 case "3":
-                    Console.WriteLine(">Exiting program with 'return;'");
                     return;
                 default:
                     Console.WriteLine("Choose from the available option!");
