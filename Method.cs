@@ -106,22 +106,13 @@ namespace Praktek
                 }
                 foreach (Model m in costList)
                 {
-                    Console.WriteLine("\n=== Costs ==================");
-                    Console.WriteLine("Quantity      : {0}", m.Quantity);
-                    Console.WriteLine("Variable Cost : {0}", m.VariableCost);
-                    Console.WriteLine("Fixed Cost    : {0}", m.FixedCost);
-                    Console.WriteLine("Total Cost    : {0}", m.TotalCost);
-                    Console.WriteLine("=== Calculations ===========");
-                    Console.WriteLine("Marginal Cost         : {0}", m.MarginalCost);
-                    Console.WriteLine("Average Fixed Cost    : {0}", m.AverageFixedCost);
-                    Console.WriteLine("Average Variable Cost : {0}", m.AverageVariableCost);
-                    Console.WriteLine("Average Total Cost    : {0}\n", m.AverageTotalCost);
-
-                    // Try to change and experiment with the width specifiers (10).
-                    Console.WriteLine($"{"Quantity",10} {"Variable Cost",10} {"Fixed Cost",10} {"Total Cost",10}");
-                    Console.WriteLine($"{m.Quantity,10} {m.VariableCost,10} {m.FixedCost,10} {m.TotalCost,10}");
-                    Console.WriteLine($"{"Marginal Cost",10} {"Average Fixed Cost",10} {"Average Variable Cost",10} {"Average Total Cost",10}\n");
-                    Console.WriteLine($"{m.MarginalCost,10} {m.AverageFixedCost,10} {m.AverageVariableCost,10} {m.AverageTotalCost,10}");
+                    // Learn about calculating production costs. Re-read and understand the example table.
+                    Console.WriteLine($"|{"Quantity",-15}|{"Variable Cost",-15}|{"Fixed Cost",-15}|{"Total Cost",-15}|");
+                    Console.WriteLine("|---------------+---------------+---------------+---------------|");
+                    Console.WriteLine($"|{m.Quantity,-15}|{m.VariableCost,-15}|{m.FixedCost,-15}|{m.TotalCost,-15}|");
+                    Console.WriteLine("=================================================================");
+                    Console.WriteLine($"|{"MC",-15}|{"AFC",-15}|{"AVC",-15}|{"ATC",-15}|");
+                    Console.WriteLine($"|{m.MarginalCost,-15}|{m.AverageFixedCost,-15}|{m.AverageVariableCost,-15}|{m.AverageTotalCost,-15}|\n");
                 }
             }
             catch (Exception e)
