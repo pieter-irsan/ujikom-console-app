@@ -32,46 +32,74 @@ namespace Praktek
         // TRY TO SEPARATE CALCULATION AND DATABASE INSERTION.
         public void CalculateCosts(int quantity, int variableCost, int fixedCost)
         {
-            m.TotalCost = fixedCost + variableCost;
-            m.MarginalCost = m.TotalCost/quantity;
-            Console.WriteLine("Marginal Cost         : {0}", m.MarginalCost);
-            m.AverageFixedCost = fixedCost/quantity;
-            Console.WriteLine("Average Fixed Cost    : {0}", m.AverageFixedCost);
-            m.AverageVariableCost = variableCost/quantity;
-            Console.WriteLine("Average Variable Cost : {0}", m.AverageVariableCost);
-            m.AverageTotalCost = m.TotalCost/quantity;
-            Console.WriteLine("Average Total Cost    : {0}", m.AverageTotalCost);
-
-            SqlConnection connection = new SqlConnection(path);
-            SqlCommand command = new SqlCommand("InsertCost", connection);
-
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@Quantity", quantity);
-            command.Parameters.AddWithValue("@VariableCost", variableCost);
-            command.Parameters.AddWithValue("@FixedCost", fixedCost);
-            command.Parameters.AddWithValue("@TotalCost", m.TotalCost);
-            command.Parameters.AddWithValue("@MarginalCost", m.MarginalCost);
-            command.Parameters.AddWithValue("@AverageFixedCost", m.AverageFixedCost);
-            command.Parameters.AddWithValue("@AverageVariableCost", m.AverageVariableCost);
-            command.Parameters.AddWithValue("@AverageTotalCost", m.AverageTotalCost);
-            
-            try 
+            using (SqlConnection connection = new SqlConnection(path))
             {
-                connection.Open();
-                int i = command.ExecuteNonQuery();
-                connection.Close();
-                if (i == 1) {
-                    Console.WriteLine("[Successfully saved to database]");
-                    return;
+                SqlCommand command = new SqlCommand("GetPrevQuantityAndTotalCost", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            m.PrevQuantity = reader.GetInt32(0);
+                            m.PrevTotalCost = reader.GetInt32(1);
+                        }
+                    } reader.Close();
+                }
+                catch (Exception e)
+                { 
+                    // MODIFY SO THAT IT LOGS ERRORS.
+                    Console.WriteLine("\n" + e.Message);
                 }
             }
-            catch (Exception e) 
+
+            m.TotalCost = fixedCost + variableCost;
+            m.AverageFixedCost = fixedCost/quantity;
+            m.AverageVariableCost = variableCost/quantity;
+            m.AverageTotalCost = m.TotalCost/quantity;
+            if (m.PrevQuantity == 0 && m.PrevTotalCost == 0)
+                m.MarginalCost = 0;
+            else
+                m.MarginalCost = (m.TotalCost - m.PrevTotalCost) / (quantity - m.PrevQuantity);
+            
+            Console.WriteLine("Marginal Cost         : {0}", m.MarginalCost);
+            Console.WriteLine("Average Fixed Cost    : {0}", m.AverageFixedCost);
+            Console.WriteLine("Average Variable Cost : {0}", m.AverageVariableCost);
+            Console.WriteLine("Average Total Cost    : {0}", m.AverageTotalCost);
+
+            using (SqlConnection connection = new SqlConnection(path))
             {
-                // MODIFY SO THAT IT LOGS ERRORS.
-                Console.WriteLine("\nDatabase insert failed!");
-                Console.WriteLine("===================================================================");
-                Console.WriteLine(e);
-                Console.WriteLine("===================================================================");
+                SqlCommand command = new SqlCommand("InsertCosts", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Quantity", quantity);
+                command.Parameters.AddWithValue("@VariableCost", variableCost);
+                command.Parameters.AddWithValue("@FixedCost", fixedCost);
+                command.Parameters.AddWithValue("@TotalCost", m.TotalCost);
+                command.Parameters.AddWithValue("@MarginalCost", m.MarginalCost);
+                command.Parameters.AddWithValue("@AverageFixedCost", m.AverageFixedCost);
+                command.Parameters.AddWithValue("@AverageVariableCost", m.AverageVariableCost);
+                command.Parameters.AddWithValue("@AverageTotalCost", m.AverageTotalCost);
+
+                try 
+                {
+                    connection.Open();
+                    int i = command.ExecuteNonQuery();
+                    connection.Close();
+                    if (i == 1) 
+                    {
+                        Console.WriteLine("[Successfully saved to database]");
+                        return;
+                    }
+                }
+                catch (Exception e) 
+                {
+                    // MODIFY SO THAT IT LOGS ERRORS.
+                    Console.WriteLine("\n" + e.Message);
+                }
             }
         }
 
@@ -106,26 +134,49 @@ namespace Praktek
                 }
                 foreach (Model m in costList)
                 {
-                    // Learn about calculating production costs. Re-read and understand the example table.
                     Console.WriteLine($"|{"Quantity",-15}|{"Variable Cost",-15}|{"Fixed Cost",-15}|{"Total Cost",-15}|");
                     Console.WriteLine("|---------------+---------------+---------------+---------------|");
                     Console.WriteLine($"|{m.Quantity,-15}|{m.VariableCost,-15}|{m.FixedCost,-15}|{m.TotalCost,-15}|");
                     Console.WriteLine("=================================================================");
                     Console.WriteLine($"|{"MC",-15}|{"AFC",-15}|{"AVC",-15}|{"ATC",-15}|");
+                    Console.WriteLine("|---------------+---------------+---------------+---------------|");
                     Console.WriteLine($"|{m.MarginalCost,-15}|{m.AverageFixedCost,-15}|{m.AverageVariableCost,-15}|{m.AverageTotalCost,-15}|\n");
                 }
             }
             catch (Exception e)
             {
                 // MODIFY SO THAT IT LOGS ERRORS.
-                Console.WriteLine("Failed to read data!");
-                Console.WriteLine("===================================================================");
-                Console.WriteLine(e);
-                Console.WriteLine("===================================================================");
+                Console.WriteLine("\n" + e.Message);
             }
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey(true);
             menu.Option();
+        }
+
+        public void ResetTable()
+        {
+            using (SqlConnection connection = new SqlConnection(path))
+            {
+                SqlCommand command = new SqlCommand("TRUNCATE TABLE ProductionCost", connection);
+                try
+                {
+                    connection.Open();
+                    int i = command.ExecuteNonQuery();
+                    connection.Close();
+                    if (i == 1)
+                        Console.WriteLine("[Table successfully reset]");
+                    else
+                        Console.WriteLine("[Table reset failed]");
+                }
+                catch (Exception e)
+                {
+                    // MODIFY SO THAT IT LOGS ERRORS.
+                    Console.WriteLine("\n" + e.Message);
+                }
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey(true);
+                menu.Option();
+            }
         }
     }
 }

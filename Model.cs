@@ -3,9 +3,11 @@ namespace Praktek
     class Model
     {       
         private int quantity;
+        private int prevQuantity;
         private int variableCost;
         private int fixedCost;
         private int totalCost;
+        private int prevTotalCost;
 
         private int marginalCost;
         private int averageFixedCost;
@@ -16,6 +18,11 @@ namespace Praktek
         {
             get { return quantity; }
             set { quantity = value; }
+        }
+        public int PrevQuantity
+        {
+            get { return prevQuantity; }
+            set { prevQuantity = value; }
         }
         public int VariableCost
         {
@@ -31,6 +38,11 @@ namespace Praktek
         {
             get { return totalCost; }
             set { totalCost = value; }
+        }
+        public int PrevTotalCost
+        {
+            get { return prevTotalCost; }
+            set { prevTotalCost = value; }
         }
 
         public int MarginalCost

@@ -35,6 +35,9 @@ namespace Praktek
                     break;
                 case "3":
                     return;
+                case "4":
+                    method.ResetTable();
+                    return;
                 default:
                     Console.WriteLine("Choose from the available option!");
                     Console.WriteLine("Press any key to continue...");
