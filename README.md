@@ -24,7 +24,7 @@ And produces four outputs:
   `AVC = VC / Q`
 - Average Total Cost `(ATC)`
 
-  `ATC = FC + VC`
+  `ATC = TC / Q`
 
 ## Installation
 To get started with the project, run the `.sql` file to create all the neccessary database tables and procedures. And then type `dotnet run` in your terminal.
