@@ -3,11 +3,17 @@ namespace Praktek
     class Model
     {       
         private int quantity;
+<<<<<<< HEAD
         private int prevQuantity;
         private int variableCost;
         private int fixedCost;
         private int totalCost;
         private int prevTotalCost;
+=======
+        private int variableCost;
+        private int fixedCost;
+        private int totalCost;
+>>>>>>> d73549fa871ae891a65b426fc182037223ac6e3e
 
         private int marginalCost;
         private int averageFixedCost;
@@ -19,11 +25,14 @@ namespace Praktek
             get { return quantity; }
             set { quantity = value; }
         }
+<<<<<<< HEAD
         public int PrevQuantity
         {
             get { return prevQuantity; }
             set { prevQuantity = value; }
         }
+=======
+>>>>>>> d73549fa871ae891a65b426fc182037223ac6e3e
         public int VariableCost
         {
             get { return variableCost; }
@@ -39,11 +48,14 @@ namespace Praktek
             get { return totalCost; }
             set { totalCost = value; }
         }
+<<<<<<< HEAD
         public int PrevTotalCost
         {
             get { return prevTotalCost; }
             set { prevTotalCost = value; }
         }
+=======
+>>>>>>> d73549fa871ae891a65b426fc182037223ac6e3e
 
         public int MarginalCost
         {
