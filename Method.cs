@@ -29,22 +29,16 @@ namespace Praktek
             }
             catch (Exception e)
             {
-                // MODIFY SO THAT IT LOGS ERRORS.
-                Console.WriteLine("\n" + e.Message);
+                Console.WriteLine("\n[" + e.Message + "]");
             }
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadKey(true);
-            menu.Option();
         }
 
-        // TRY TO SEPARATE CALCULATION AND DATABASE INSERTION.
         public void CalculateCosts(int quantity, int variableCost, int fixedCost)
         {
             using (SqlConnection connection = new SqlConnection(path))
             {
                 SqlCommand command = new SqlCommand("GetPrevQuantityAndTotalCost", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                
                 try
                 {
                     connection.Open();
@@ -59,9 +53,8 @@ namespace Praktek
                     } reader.Close();
                 }
                 catch (Exception e)
-                { 
-                    // MODIFY SO THAT IT LOGS ERRORS.
-                    Console.WriteLine("\n" + e.Message);
+                {
+                    Console.WriteLine("\n[" + e.Message + "]");
                 }
             }
 
@@ -105,7 +98,6 @@ namespace Praktek
                 }
                 catch (Exception e) 
                 {
-                    // MODIFY SO THAT IT LOGS ERRORS.
                     Console.WriteLine("\n[" + e.Message + "]");
                 }
             }
@@ -141,76 +133,90 @@ namespace Praktek
                     );
                 }
 
-                string length = "-" + (costList.Max(m => m.TotalCost).ToString().Length + 1).ToString();
+                // Get max TotalCost length and add 1. Initial "-" is for left alignment.
+                string lengthAlign = "-" + (costList.Max(m => m.TotalCost).ToString().Length + 1).ToString();
                 string header = String.Format(
-                    "|{0,"+length+"}|{1,"+length+"}|{2,"+length+"}|{3,"+length+"}|| {4,"+length+"}|{5,"+length+"}|{6,"+length+"}|{7,"+length+"}|", 
+                    "|{0,"+lengthAlign+"}|{1,"+lengthAlign+"}|{2,"+lengthAlign+"}|{3,"+lengthAlign+"}|| {4,"+lengthAlign+"}|{5,"+lengthAlign+"}|{6,"+lengthAlign+"}|{7,"+lengthAlign+"}|", 
                     "Q", "VC", "FC", "TC", "MC", "AVC", "AFC", "ATC"
                 );
                 Console.WriteLine(header);
 
-
-                // Print header and body separator.
-                // Not working! Maybe try another loop.
-
-
-                int i = 0;
-                Console.Write("\n|");
-                while (i < (Convert.ToInt32(length) - 1))
+                // Get max TotalCost length, times the amount of variables (8), plus the amount of other table characters (17).
+                int i = costList.Max(m => m.TotalCost).ToString().Length * 8 + 17;
+                // Print table header and body separator.
+                Console.Write("|");
+                while (i > 0)
                 {
                     Console.Write("-");
-                    i++;
+                    i--;
                 }
-                Console.Write("|");
+                Console.Write("|\n");
 
-                // Console.WriteLine($"|{"Q",-15}|{"VC",-15}|{"FC",-15}|{"TC",-15}|{"MC",-15}|{"AVC",-15}|{"AFC",-15}|{"ATC",-15}|");
-                // Console.WriteLine("|---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------|");
                 foreach (Model m in costList)
                 {
                     string body = String.Format(
-                        "|{0,"+length+"}|{1,"+length+"}|{2,"+length+"}|{3,"+length+"}|| {4,"+length+"}|{5,"+length+"}|{6,"+length+"}|{7,"+length+"}|", 
+                        "|{0,"+lengthAlign+"}|{1,"+lengthAlign+"}|{2,"+lengthAlign+"}|{3,"+lengthAlign+"}|| {4,"+lengthAlign+"}|{5,"+lengthAlign+"}|{6,"+lengthAlign+"}|{7,"+lengthAlign+"}|", 
                         m.Quantity, m.VariableCost, m.FixedCost, m.TotalCost, m.MarginalCost, m.AverageVariableCost, m.AverageFixedCost, m.AverageTotalCost
                     );
                     Console.WriteLine(body);
-                    // Console.WriteLine (
-                    //     $"|{m.Quantity,-15}|{m.VariableCost,-15}|{m.FixedCost,-15}|{m.TotalCost,-15}" +
-                    //     $"|{m.MarginalCost,-15}|{m.AverageVariableCost,-15}|{m.AverageFixedCost,-15}|{m.AverageTotalCost,-15}|"
-                    // );
                 }
             }
             catch (Exception e)
             {
-                // MODIFY SO THAT IT LOGS ERRORS.
                 Console.WriteLine("\n[" + e.Message + "]");
             }
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadKey(true);
-            menu.Option();
+        }
+
+        public void DeleteRow(int quantity)
+        {
+            using (SqlConnection connection = new SqlConnection(path))
+            {
+                SqlCommand command = new SqlCommand("DeleteRow", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Quantity", quantity);
+                try
+                {
+                    connection.Open();
+                    int i = command.ExecuteNonQuery();
+                    if (i == 1)
+                        Console.WriteLine("[Row successfully deleted]");
+                    else 
+                        Console.WriteLine("[Failed to delete row]");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("\n[" + e.Message + "]");
+                }
+            }
         }
 
         public void ResetTable()
         {
             using (SqlConnection connection = new SqlConnection(path))
             {
-                SqlCommand command = new SqlCommand("TRUNCATE TABLE ProductionCost", connection);
+                SqlCommand command = new SqlCommand("ResetProductionCost", connection);
                 try
                 {
                     connection.Open();
                     int i = command.ExecuteNonQuery();
                     connection.Close();
-                    if (i == 1)
+                    if (i == -1)
                         Console.WriteLine("[Table successfully reset]");
                     else
                         Console.WriteLine("[Table reset failed]");
                 }
                 catch (Exception e)
                 {
-                    // MODIFY SO THAT IT LOGS ERRORS.
                     Console.WriteLine("\n[" + e.Message + "]");
                 }
-                Console.WriteLine("\nPress any key to continue...");
-                Console.ReadKey(true);
-                menu.Option();
             }
+        }
+
+        public void FinishTask()
+        {
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey(true);
+            menu.Option();
         }
     }
 }
