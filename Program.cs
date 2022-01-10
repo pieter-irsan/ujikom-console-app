@@ -20,13 +20,9 @@ namespace Praktek
             Console.WriteLine("=============================");
             Console.WriteLine("[1] Calculate costs");
             Console.WriteLine("[2] See previous costs");
-<<<<<<< HEAD
             Console.WriteLine("[3] Delete a row");
             Console.WriteLine("[4] Reset table");
             Console.WriteLine("[5] Exit");
-=======
-            Console.WriteLine("[3] Exit");
->>>>>>> d73549fa871ae891a65b426fc182037223ac6e3e
 
             string option = "";
             Method method = new Method();
@@ -35,7 +31,6 @@ namespace Praktek
             {
                 case "1":
                     method.Result();
-<<<<<<< HEAD
                     method.FinishTask();
                     break;
                 case "2":
@@ -54,14 +49,6 @@ namespace Praktek
                     method.FinishTask();
                     break;
                 case "5":
-=======
-                    break;
-                case "2":
-                    method.GetCosts();
-                    break;
-                case "3":
-                    Console.WriteLine(">Exiting program with 'return;'");
->>>>>>> d73549fa871ae891a65b426fc182037223ac6e3e
                     return;
                 default:
                     Console.WriteLine("Choose from the available option!");
