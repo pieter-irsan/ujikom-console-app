@@ -17,7 +17,7 @@ CREATE TABLE ProductionCost
 GO
 
 
-CREATE PROCEDURE InsertCost
+CREATE PROCEDURE InsertCosts
     @Quantity INT NOT NULL,
     @VariableCost INT NOT NULL,
     @FixedCost INT NOT NULL,
@@ -49,4 +49,32 @@ AS
         @AverageVariableCost,
         @AverageTotalCost
     )
+GO
+
+
+CREATE PROCEDURE GetPrevQuantityAndTotalCost
+AS
+SELECT TOP 1 Quantity, TotalCost
+FROM ProductionCost
+ORDER BY Id DESC
+GO
+
+
+CREATE PROCEDURE GetCosts
+AS
+SELECT * FROM ProductionCost
+GO
+
+
+CREATE PROCEDURE DeleteRow
+    @Quantity INT
+AS
+    DELETE FROM ProductionCost
+    WHERE Quantity = @Quantity
+GO
+
+
+CREATE PROCEDURE ResetProductionCost
+AS
+TRUNCATE TABLE ProductionCost
 GO
