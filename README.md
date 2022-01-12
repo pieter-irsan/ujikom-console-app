@@ -1,5 +1,5 @@
 # Production Costs Calculator
-This is my <s>finished</s> _**WIP**_ C# console app that was supposed to be submitted for the Professional Programmer Certification Test (Uji Kompetensi Skema Programmer) by LSP UI, but I wasn't able to finish in time back then.
+A C# console app to calculate Marginal Cost, Average Fixed Cost, Average Variable Cost, and Average Total Cost.
 
 ## Description
 
